@@ -12,11 +12,6 @@ remove() {
   rm $1
 }
 
-install_bin() {
-  # check for install command
-  mv $1 $location
-}
-
 main() {
   # first get filename
   fname=
@@ -27,21 +22,16 @@ main() {
   fi
 
   # next create link
-  link $1 $fname
-
-  # next install
-  install_bin $fname
-
+  ln $1 "$location/$fname"
 }
+
 
 # run main
 if [ -z "$1" ]; then
   echo "Please provide binary to install as an argument :)"
 else
   case $1 in
-    "-r") remove $location/$2
-      ;;
-    *) main $1 $2
-      ;;
+    "-r") remove $location/$2 ;;
+    *) main $1 $2 ;;
   esac
 fi
